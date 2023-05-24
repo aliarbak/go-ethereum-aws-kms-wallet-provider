@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	kms_wallet_provider "github.com/aliarbak/go-ethereum-aws-kms-wallet-provider"
+	kmswallet "github.com/aliarbak/go-ethereum-aws-kms-wallet-provider"
 	contracts "github.com/aliarbak/go-ethereum-aws-kms-wallet-provider/example/contracts"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/credentials"
@@ -29,11 +29,11 @@ func main() {
 	kmsClient := kms.NewFromConfig(config) // or you can use kms.New(...)
 
 	// Initialize the wallet provider (with default cache duration)
-	walletProvider := kms_wallet_provider.New(kmsClient, nil)
+	walletProvider := kmswallet.NewProvider(kmsClient, nil)
 
 	// Create 3 wallets: account holder, authorized wallet, ordinary(non-authorized) wallet
 	accountHolderAlias := "michael"
-	accountHolderWallet, err := walletProvider.CreateWallet(ctx, kms_wallet_provider.CreateWalletInput{
+	accountHolderWallet, err := walletProvider.CreateWallet(ctx, kmswallet.CreateWalletInput{
 		Alias:               &accountHolderAlias, // the alias of the key in KMS will be "michael"
 		AddWalletAddressTag: true,                // it will add the wallet address into the key tags
 		Tags:                map[string]string{"role": "account-holder"},
@@ -44,7 +44,7 @@ func main() {
 		log.Fatalf("account holder wallet creation failed, err: %s", err)
 	}
 
-	authorizedWallet, err := walletProvider.CreateWallet(ctx, kms_wallet_provider.CreateWalletInput{
+	authorizedWallet, err := walletProvider.CreateWallet(ctx, kmswallet.CreateWalletInput{
 		Alias:                           nil,   // It won't have a custom alias
 		IgnoreDefaultWalletAddressAlias: false, // It will set the generated wallet address as the alias
 		Tags:                            map[string]string{"role": "authorized"},
@@ -54,7 +54,7 @@ func main() {
 		log.Fatalf("authorized wallet creation failed, err: %s", err)
 	}
 
-	ordinaryWallet, err := walletProvider.CreateWallet(ctx, kms_wallet_provider.CreateWalletInput{
+	ordinaryWallet, err := walletProvider.CreateWallet(ctx, kmswallet.CreateWalletInput{
 		Alias:                           nil,
 		IgnoreDefaultWalletAddressAlias: true, // This key won't have any alias or tags
 	})

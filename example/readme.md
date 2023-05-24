@@ -74,7 +74,7 @@ config := aws.Config{
 kmsClient := kms.NewFromConfig(config) // or you can use kms.New(...)
 
 // Initialize the wallet provider (with default cache duration)
-walletProvider := kms_wallet_provider.New(kmsClient, nil)
+walletProvider := kmswallet.NewProvider(kmsClient, nil)
 ```
 
 ### Step 2: Creating the Account Holder Wallet
@@ -83,7 +83,7 @@ Create the account holder wallet by specifying a custom alias (in this example, 
 
 ```go
 accountHolderAlias := "michael"
-accountHolderWallet, err := walletProvider.CreateWallet(ctx, kms_wallet_provider.CreateWalletInput{
+accountHolderWallet, err := walletProvider.CreateWallet(ctx, kmswallet.CreateWalletInput{
     Alias:               &accountHolderAlias, // the alias of the key in KMS will be "michael"
     AddWalletAddressTag: true,                // it will add the wallet address into the key tags
     Tags:                map[string]string{"role": "account-holder"},
@@ -102,7 +102,7 @@ if err != nil {
 Create the authorized wallet without specifying a custom alias, but set the `IgnoreDefaultWalletAddressAlias` flag to `false`. This will assign the generated wallet address as the alias for the wallet.
 
 ```go
-authorizedWallet, err := walletProvider.CreateWallet(ctx, kms_wallet_provider.CreateWalletInput{
+authorizedWallet, err := walletProvider.CreateWallet(ctx, kmswallet.CreateWalletInput{
     Alias:                           nil,   // It won't have a custom alias
     IgnoreDefaultWalletAddressAlias: false, // It will set the generated wallet address as the alias
     Tags:                            map[string]string{"role": "authorized"},
@@ -118,7 +118,7 @@ if err != nil {
 Create the ordinary wallet without specifying a custom alias and set the `IgnoreDefaultWalletAddressAlias` flag to `true`. This means the wallet will not have any alias.
 
 ```go
-ordinaryWallet, err := walletProvider.CreateWallet(ctx, kms_wallet_provider.CreateWalletInput{
+ordinaryWallet, err := walletProvider.CreateWallet(ctx, kmswallet.CreateWalletInput{
     Alias:                           nil,
     IgnoreDefaultWalletAddressAlias: true, // This key won't have any alias or tags
 })
