@@ -1,4 +1,4 @@
-package kms_wallet_provider
+package kmswallet
 
 import (
 	"bytes"
@@ -99,7 +99,7 @@ type provider struct {
 	cache  *cache.Cache
 }
 
-func New(client KMSClient, cacheExpiration *time.Duration) Provider {
+func NewProvider(client KMSClient, cacheExpiration *time.Duration) Provider {
 	if cacheExpiration == nil {
 		cacheExpiration = &defaultCacheDuration
 	}

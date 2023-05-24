@@ -8,7 +8,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider.svg)](https://pkg.go.dev/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider) [![Goreport](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![License](https://goreportcard.com/badge/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider)](https://goreportcard.com/report/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider)
 
-The `kms_wallet_provider` is a Go package that enables the creation of Ethereum wallets using the AWS Key Management Service (KMS). It allows you to create wallets(keys on KMS) and sign transactions or messages with them.
+The `kmswallet` is a Go package that enables the creation of Ethereum wallets using the AWS Key Management Service (KMS). It allows you to create wallets(keys on KMS) and sign transactions or messages with them.
 
 The transaction signing implementations in this package are derived from the [go-ethereum-aws-kms-tx-signer](https://github.com/welthee/go-ethereum-aws-kms-tx-signer), which is licensed under the MIT License.
 
@@ -37,10 +37,10 @@ go get github.com/aliarbak/go-ethereum-aws-kms-wallet-provider
 Once installed, you can import the package in your Go code:
 
 ```go
-import "github.com/aliarbak/go-ethereum-aws-kms-wallet-provider/kms_wallet_provider"
+import "github.com/aliarbak/go-ethereum-aws-kms-wallet-provider"
 ```
 
-To create a provider, call the `kms_wallet_provider.New(client *kms.Client, cacheExpiration *time.Duration) Provider` function. It requires the following parameters:
+To create a provider, call the `kmswallet.NewProvider(client *kms.Client, cacheExpiration *time.Duration) Provider` function. It requires the following parameters:
 
 - `client`: A reference to the `kms.Client` for AWS KMS.
 - `cacheExpiration`: The cache expiration duration for public keys to avoid fetching them from KMS every time. If `nil` is provided, the default duration of 1 year will be used.
@@ -53,12 +53,12 @@ config := aws.Config{
 }
 
 kmsClient := kms.NewFromConfig(config) // or you can use kms.New(...)
-walletProvider := kms_wallet_provider.New(kmsClient, nil) // with default cache duration
+walletProvider := kmswallet.NewProvider(kmsClient, nil) // with default cache duration
 ```
 
 ## Functionality and Usage
 
-The `kms_wallet_provider` package provides the following functions:
+The `kmswallet` package provides the following functions:
 
 ### CreateWallet
 

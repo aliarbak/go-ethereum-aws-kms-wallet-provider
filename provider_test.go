@@ -1,4 +1,4 @@
-package kms_wallet_provider_test
+package kmswallet_test
 
 import (
 	"context"
@@ -61,16 +61,16 @@ func (m *mockKMSClient) GetPublicKey(ctx context.Context, params *kms.GetPublicK
 func TestCreateWallet_Should_Create_Wallet_With_Wallet_Address_Tag_When_Add_Wallet_Address_Tag_Is_True(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
-	input := kms_wallet_provider.CreateWalletInput{
+	input := kmswallet.CreateWalletInput{
 		Tags:                            map[string]string{"tag1": "value1"},
 		AddWalletAddressTag:             true,
 		IgnoreDefaultWalletAddressAlias: true,
 	}
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
-	expectedOutput := kms_wallet_provider.KMSWallet{
+	expectedOutput := kmswallet.KMSWallet{
 		KeyId:   "keyId",
 		Address: "0x5B1a501FAB5c6D78CBd61F31f3B4B42286Bcf118",
 	}
@@ -102,16 +102,16 @@ func TestCreateWallet_Should_Create_Wallet_With_Wallet_Address_Tag_When_Add_Wall
 func TestCreateWallet_Should_Create_Wallet_Without_Wallet_Address_Tag_When_Add_Wallet_Address_Tag_Is_False(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
-	input := kms_wallet_provider.CreateWalletInput{
+	input := kmswallet.CreateWalletInput{
 		Tags:                            map[string]string{"tag1": "value1"},
 		AddWalletAddressTag:             false,
 		IgnoreDefaultWalletAddressAlias: true,
 	}
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
-	expectedOutput := kms_wallet_provider.KMSWallet{
+	expectedOutput := kmswallet.KMSWallet{
 		KeyId:   "keyId",
 		Address: "0x5B1a501FAB5c6D78CBd61F31f3B4B42286Bcf118",
 	}
@@ -141,10 +141,10 @@ func TestCreateWallet_Should_Create_Wallet_Without_Wallet_Address_Tag_When_Add_W
 func TestCreateWallet_Should_Create_Wallet_With_Alias_When_Alias_Is_Provided(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
 	alias := "alias"
-	input := kms_wallet_provider.CreateWalletInput{
+	input := kmswallet.CreateWalletInput{
 		Alias:                           &alias,
 		Tags:                            map[string]string{"tag1": "value1"},
 		AddWalletAddressTag:             false,
@@ -152,7 +152,7 @@ func TestCreateWallet_Should_Create_Wallet_With_Alias_When_Alias_Is_Provided(t *
 	}
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
-	expectedOutput := kms_wallet_provider.KMSWallet{
+	expectedOutput := kmswallet.KMSWallet{
 		KeyId:   "keyId",
 		Address: "0x5B1a501FAB5c6D78CBd61F31f3B4B42286Bcf118",
 	}
@@ -184,16 +184,16 @@ func TestCreateWallet_Should_Create_Wallet_With_Alias_When_Alias_Is_Provided(t *
 func TestCreateWallet_Should_Create_Wallet_With_Alias_When_Alias_Is_Not_Provided_But_Ignore_Default_Wallet_address_Alias_Is_False(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
-	input := kms_wallet_provider.CreateWalletInput{
+	input := kmswallet.CreateWalletInput{
 		Tags:                            map[string]string{"tag1": "value1"},
 		AddWalletAddressTag:             false,
 		IgnoreDefaultWalletAddressAlias: false,
 	}
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
-	expectedOutput := kms_wallet_provider.KMSWallet{
+	expectedOutput := kmswallet.KMSWallet{
 		KeyId:   "keyId",
 		Address: "0x5B1a501FAB5c6D78CBd61F31f3B4B42286Bcf118",
 	}
@@ -225,10 +225,10 @@ func TestCreateWallet_Should_Create_Wallet_With_Alias_When_Alias_Is_Not_Provided
 func TestGetWallet(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
-	expectedOutput := kms_wallet_provider.KMSWallet{
+	expectedOutput := kmswallet.KMSWallet{
 		KeyId:   "keyId",
 		Address: "0x5B1a501FAB5c6D78CBd61F31f3B4B42286Bcf118",
 	}
@@ -247,10 +247,10 @@ func TestGetWallet(t *testing.T) {
 func TestGetWallet_When_Public_Key_Already_Cached(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
-	expectedOutput := kms_wallet_provider.KMSWallet{
+	expectedOutput := kmswallet.KMSWallet{
 		KeyId:   "keyId",
 		Address: "0x5B1a501FAB5c6D78CBd61F31f3B4B42286Bcf118",
 	}
@@ -272,11 +272,11 @@ func TestGetWallet_When_Public_Key_Already_Cached(t *testing.T) {
 func TestGetWalletByAlias(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
 	keyId := "keyId"
-	expectedOutput := kms_wallet_provider.KMSWallet{
+	expectedOutput := kmswallet.KMSWallet{
 		KeyId:   keyId,
 		Address: "0x5B1a501FAB5c6D78CBd61F31f3B4B42286Bcf118",
 	}
@@ -302,7 +302,7 @@ func TestGetWalletByAlias(t *testing.T) {
 func TestGetWalletTransactor(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
 	keyId := "keyId"
@@ -322,7 +322,7 @@ func TestGetWalletTransactor(t *testing.T) {
 func TestGetWalletTransactorByAlias(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
 	keyId := "keyId"
@@ -348,7 +348,7 @@ func TestGetWalletTransactorByAlias(t *testing.T) {
 func TestGetWalletCaller(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
 	keyId := "keyId"
@@ -368,7 +368,7 @@ func TestGetWalletCaller(t *testing.T) {
 func TestGetWalletCallerByAlias(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
 	keyId := "keyId"
@@ -394,7 +394,7 @@ func TestGetWalletCallerByAlias(t *testing.T) {
 func TestDisableWallet(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 	keyId := "keyId"
 
 	mockClient.On("DisableKey", mock.Anything, mock.Anything, mock.Anything).Return(&kms.DisableKeyOutput{}, nil)
@@ -410,7 +410,7 @@ func TestDisableWallet(t *testing.T) {
 func TestDisableWalletByAlias(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 	keyId := "keyId"
 
 	mockClient.On("DescribeKey", mock.Anything, mock.Anything, mock.Anything).Return(&kms.DescribeKeyOutput{
@@ -432,7 +432,7 @@ func TestDisableWalletByAlias(t *testing.T) {
 func TestEnableWallet(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 	keyId := "keyId"
 
 	mockClient.On("EnableKey", mock.Anything, mock.Anything, mock.Anything).Return(&kms.EnableKeyOutput{}, nil)
@@ -448,7 +448,7 @@ func TestEnableWallet(t *testing.T) {
 func TestEnableWalletByAlias(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 	keyId := "keyId"
 
 	mockClient.On("DescribeKey", mock.Anything, mock.Anything, mock.Anything).Return(&kms.DescribeKeyOutput{
@@ -470,7 +470,7 @@ func TestEnableWalletByAlias(t *testing.T) {
 func TestSignMessage_When_Successful(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE1TWYYp+bySM6J3m99CxKhHZFgJqdwm5V6kGziuJ4kc7f0xORg5AqGRKbFNTSsmYTXNi2Z/cl298eyKTbmy+8aQ==")
 	message := []byte("Hello World!")
 	keyId := "keyId"
@@ -498,7 +498,7 @@ func TestSignMessage_When_Successful(t *testing.T) {
 func TestSignMessage_When_Recover_Failed(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAERtrxsFyn7UzP2OgzzJA6Y89p/2175fOwXeP33ACZgmdD2jJlQdypNM9CCDm3J6uqTrvYrO0hwF8p/k/Tf94DjA==")
 	message := []byte("Hello World!")
 	keyId := "keyId"
@@ -525,7 +525,7 @@ func TestSignMessage_When_Recover_Failed(t *testing.T) {
 func TestSignMessageByAlias(t *testing.T) {
 	// given
 	mockClient := &mockKMSClient{}
-	provider := kms_wallet_provider.New(mockClient, nil)
+	provider := kmswallet.NewProvider(mockClient, nil)
 	publicKey, _ := base64.StdEncoding.DecodeString("MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE1TWYYp+bySM6J3m99CxKhHZFgJqdwm5V6kGziuJ4kc7f0xORg5AqGRKbFNTSsmYTXNi2Z/cl298eyKTbmy+8aQ==")
 	message := []byte("Hello World!")
 	keyId := "keyId"
