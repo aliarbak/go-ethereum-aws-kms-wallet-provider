@@ -1,6 +1,6 @@
 # AWS KMS Ethereum Wallet Provider for Go
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider.svg)](https://pkg.go.dev/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Go Reference](https://pkg.go.dev/badge/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider.svg)](https://pkg.go.dev/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider) [![Goreport](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![License](https://goreportcard.com/badge/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider)](https://goreportcard.com/report/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider)
 
 The `kms_wallet_provider` is a Go package that enables the creation of Ethereum wallets using the AWS Key Management Service (KMS). It allows you to create  wallets(keys on KMS) and sign transactions or messages with them.
 
@@ -142,4 +142,4 @@ The package also provides several utility functions to work with aliases:
 - `GetKeyIdByAlias`: Retrieves the keyId associated with the given `alias`.
 
 ## Example Usage
-You can access detailed usage example [from this link](https://github.com/aliarbak/go-ethereum-aws-kms-wallet-provider/example/readme.md).
+You can access detailed usage example [from this link](https://github.com/aliarbak/go-ethereum-aws-kms-wallet-provider/blob/main/example/readme.md).
