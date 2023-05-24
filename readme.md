@@ -1,8 +1,14 @@
+<!--
+  Title: AWS KMS Ethereum Wallet Provider for Go
+  Description: a Go package that enables the creation of Ethereum wallets using the AWS KMS. It allows you to create wallets(keys on KMS) and sign transactions or messages with them.
+  Author: aliarbak
+  -->
+
 # AWS KMS Ethereum Wallet Provider for Go
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider.svg)](https://pkg.go.dev/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Go Reference](https://pkg.go.dev/badge/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider.svg)](https://pkg.go.dev/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider) [![Goreport](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![License](https://goreportcard.com/badge/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider)](https://goreportcard.com/report/github.com/aliarbak/go-ethereum-aws-kms-wallet-provider)
 
-The `kms_wallet_provider` is a Go package that enables the creation of Ethereum wallets using the AWS Key Management Service (KMS). It allows you to create  wallets(keys on KMS) and sign transactions or messages with them.
+The `kms_wallet_provider` is a Go package that enables the creation of Ethereum wallets using the AWS Key Management Service (KMS). It allows you to create wallets(keys on KMS) and sign transactions or messages with them.
 
 The transaction signing implementations in this package are derived from the [go-ethereum-aws-kms-tx-signer](https://github.com/welthee/go-ethereum-aws-kms-tx-signer), which is licensed under the MIT License.
 
@@ -39,7 +45,7 @@ To create a provider, call the `kms_wallet_provider.New(client *kms.Client, cach
 - `client`: A reference to the `kms.Client` for AWS KMS.
 - `cacheExpiration`: The cache expiration duration for public keys to avoid fetching them from KMS every time. If `nil` is provided, the default duration of 1 year will be used.
 
-To create a new kms.Client:
+To create a kms.Client and a wallet provider:
 ```go
 config := aws.Config{
     Region:      "eu-central-1",
@@ -47,6 +53,7 @@ config := aws.Config{
 }
 
 kmsClient := kms.NewFromConfig(config) // or you can use kms.New(...)
+walletProvider := kms_wallet_provider.New(kmsClient, nil) // with default cache duration
 ```
 
 ## Functionality and Usage
@@ -142,4 +149,4 @@ The package also provides several utility functions to work with aliases:
 - `GetKeyIdByAlias`: Retrieves the keyId associated with the given `alias`.
 
 ## Example Usage
-You can access detailed usage example [from this link](https://github.com/aliarbak/go-ethereum-aws-kms-wallet-provider/example/readme.md).
+You can access detailed usage example [from this link](https://github.com/aliarbak/go-ethereum-aws-kms-wallet-provider/blob/main/example/readme.md).
