@@ -182,9 +182,7 @@ if err != nil {
     log.Fatalf("deposit failed, err: %s", err)
 }
 
-depositReceipt, err := bind.WaitMined(ctx,
-
- client, depositTx)
+depositReceipt, err := bind.WaitMined(ctx, client, depositTx)
 if err != nil {
     log.Fatalf("deposit failed, err: %s", err)
 }
@@ -253,4 +251,4 @@ if withdrawReceipt.Status != types.ReceiptStatusSuccessful {
 
 You can access the complete code in the `example/main.go` file.
 
-Please note that in order to execute the code, you need to load ETH/MATIC into the created wallets beforehand to cover gas and deposit fees.
+Please note that in order to execute the code, you need to fund ETH/MATIC into the created wallets beforehand to cover gas and deposit fees.
